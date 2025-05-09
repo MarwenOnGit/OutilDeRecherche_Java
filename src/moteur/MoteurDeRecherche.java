@@ -11,7 +11,7 @@ public class MoteurDeRecherche {
     private ComparateurDeNom comparateur ;
     private Generateur generateur ;
     private Selectionneur selectionneur ;
-    private List<Pretraiteur> pretraiteurs ;
+    public List<Pretraiteur> pretraiteurs ;
 //    private Indexeur indexeur ;
     public MoteurDeRecherche(Generateur generateur, ComparateurDeNom comparateur , Selectionneur selectionneur  ) {
         this.generateur = generateur ;
@@ -24,17 +24,25 @@ public class MoteurDeRecherche {
         cibleList.add(cible);
         List<Nom> listePretraitee = new ArrayList<>();
         listePretraitee.addAll(listeDeNoms);
-
+//        System.out.println(listeDeNoms);
         for(Pretraiteur pretraiteur : pretraiteurs){
             listePretraitee = pretraiteur.pretraiter(listePretraitee);
+//            System.out.println(listePretraitee);
         }
-        for (Couple couple : generateur.generer ( listeDeNoms, cibleList ) ){
+        for (Couple couple : generateur.generer ( cibleList, listePretraitee ) ){
             CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparerNom(couple.nom1(),couple.nom2()));
             listCouplesScores.add(coupleAvecScore);
-
+            System.out.println(coupleAvecScore);
         }
+//        System.out.println(listCouplesScores);
+            List<Nom> nomsSelectionnes = (List<Nom>)selectionneur.selectionner(listCouplesScores);
+            List<Nom> resultat = new ArrayList<>();
+            for (Nom nomSelectionne : nomsSelectionnes){
+                System.out.println("indice de " + nomSelectionne + " " + nomSelectionne.index);
+                resultat.add(listeDeNoms.get(nomSelectionne.index));
+            }
 
-            return (List<Nom>) selectionneur.selectionner(listCouplesScores);
+            return resultat;
 
     }
 

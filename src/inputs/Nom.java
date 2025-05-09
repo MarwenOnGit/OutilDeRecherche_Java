@@ -3,6 +3,7 @@ import java.util.*;
 public class Nom {
     private List<String> mots;
     private  String id ;
+    public int index;
     public Nom() {
         mots = new ArrayList<>();
     }
