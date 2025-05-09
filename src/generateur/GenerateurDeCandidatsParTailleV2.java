@@ -18,6 +18,7 @@ public class GenerateurDeCandidatsParTailleV2 implements Generateur {
         for (Nom nom : liste1) {
             for (int cle = (int) (nom.transformerEnString().length() * 0.8); cle <= (int) (nom.transformerEnString().length() * 1.2); cle++) {
                 for (Nom candidat : resultatIndexage.get(cle)) {
+
                     listeFinale.add(new Couple(nom, candidat));
                 }
             }

@@ -9,7 +9,6 @@ public class Mapper implements Indexeur<Map<Integer,List<Nom>>>{
             dictionnaire.computeIfAbsent(taille, k -> new ArrayList<>()).add(nom);
         }
         return dictionnaire;
-
     }
 
 }

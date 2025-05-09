@@ -11,21 +11,26 @@ public class MoteurDeRecherche {
     private ComparateurDeNom comparateur ;
     private Generateur generateur ;
     private Selectionneur selectionneur ;
-    private List<Pretraiteur> pretraiteur ;
-    private Indexeur indexeur ;
+    private List<Pretraiteur> pretraiteurs ;
+//    private Indexeur indexeur ;
     public MoteurDeRecherche(Generateur generateur, ComparateurDeNom comparateur , Selectionneur selectionneur  ) {
         this.generateur = generateur ;
         this.comparateur = comparateur;
         this.selectionneur = selectionneur ;
     }
-    public List< Nom > search (Nom cible, List<Nom> liste  ) {
+    public List< Nom > search (Nom cible, List<Nom> listeDeNoms  ) {
         List< CoupleAvecScore> listCouplesScores = new ArrayList<>();
-        GenerateurDeCandidatsParTaille generateurParTaille = (GenerateurDeCandidatsParTaille) generateur ;
         List< Nom> cibleList = new ArrayList<>();
         cibleList.add(cible);
-        for (Couple couple : generateurParTaille.generer ( liste, cibleList ) ){
+        List<Nom> listePretraitee = new ArrayList<>();
+        listePretraitee.addAll(listeDeNoms);
+
+        for(Pretraiteur pretraiteur : pretraiteurs){
+            listePretraitee = pretraiteur.pretraiter(listePretraitee);
+        }
+        for (Couple couple : generateur.generer ( listeDeNoms, cibleList ) ){
             CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparerNom(couple.nom1(),couple.nom2()));
-            listCouplesScores.add (coupleAvecScore);
+            listCouplesScores.add(coupleAvecScore);
 
         }
 

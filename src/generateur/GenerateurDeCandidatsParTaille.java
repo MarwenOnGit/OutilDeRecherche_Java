@@ -13,7 +13,8 @@ public class GenerateurDeCandidatsParTaille implements Generateur {
             }
         }
         return listeDeTousLesCouples;
-    }}
+    }
+}
 
 
 
