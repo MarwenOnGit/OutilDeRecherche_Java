@@ -24,18 +24,16 @@ public class MoteurDeRecherche {
         cibleList.add(cible);
         List<Nom> listePretraitee = new ArrayList<>();
         listePretraitee.addAll(listeDeNoms);
-//        System.out.println(listeDeNoms);
         for(Pretraiteur pretraiteur : pretraiteurs){
-            listePretraitee = pretraiteur.pretraiter(listePretraitee);
-//            System.out.println(listePretraitee);
+            pretraiteur.pretraiter(listePretraitee);
         }
+
         System.out.println("liste pretraitée finale: " + listePretraitee );
         for (Couple couple : generateur.generer ( cibleList, listePretraitee ) ){
             CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparerNom(couple.nom1(),couple.nom2()));
             listCouplesScores.add(coupleAvecScore);
             System.out.println(coupleAvecScore);
         }
-//        System.out.println(listCouplesScores);
         List<Nom> nomsSelectionnes = (List<Nom>)selectionneur.selectionner(listCouplesScores);
         List<Nom> resultat = new ArrayList<>();
         for (Nom nomSelectionne : nomsSelectionnes){
