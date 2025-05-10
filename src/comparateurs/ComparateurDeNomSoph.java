@@ -12,7 +12,11 @@ public double comparerNom ( Nom nom1 , Nom nom2){
             score += 1;
         }
     }
-   return (double) score/(Math.min(nom1.getNomOriginalString().length(), nom2.getNomOriginalString().length())) ;
+    score = score/(Math.min(nom1.getNomOriginalString().length(), nom2.getNomOriginalString().length()));
+//    if(nom2.getMots().contains("flavien")){
+//        System.out.println("nom: " +nom2.getNomEnString() +" score: "+ score);
+//    }
+   return score ;
     }
 }
 

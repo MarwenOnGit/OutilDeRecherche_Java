@@ -20,8 +20,8 @@ import comparateurs.ComparateurLevenshtein;
 public class Main {
     public static void main(String[] args) {
         Scanner scannerObj = new Scanner(System.in);
-        ComparateurLevenshtein comparateur = new ComparateurLevenshtein();
-        ComparateurLevenshtein compLev = new ComparateurLevenshtein();
+        ComparateurDeNom comparateur = new ComparateurDeNomSoph();
+//        ComparateurLevenshtein compLev = new ComparateurLevenshtein();
         Pretraiteur pretraiteur1 = new NettoyeurDeListe() ;
         Pretraiteur pretraiteur2 = new TransformateurMinuscules();
        // Nom nom1 = new Nom("marouan bouhmed");
@@ -39,7 +39,7 @@ public class Main {
         pretraiteurs.add(new NettoyeurDeListe());
         pretraiteurs.add(new TransformateurMinuscules());
         moteur.pretraiteurs = pretraiteurs;
-        Nom nomToSearch = new Nom("Flavien Nziengui NZOUNDOU");
+        Nom nomToSearch = new Nom("Flavien Nziengui NZOUNDO");
         List<Nom> resultat = moteur.search(nomToSearch, listeDeNoms);
         List<String> resultatEnString  = new ArrayList<String>();
         for (Nom nom : resultat){
