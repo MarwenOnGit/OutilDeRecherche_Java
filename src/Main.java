@@ -41,12 +41,7 @@ public class Main {
             resultatEnString.add(nom.getNomOriginalString());
         }
         System.out.println(resultatEnString);
-        System.out.println("liste de noms : " + listeDeNoms );
-        List<String> listeDeNomsOriginale = new ArrayList<String>();
-        for (Nom nom : listeDeNoms){
-            listeDeNomsOriginale.add(nom.getNomOriginalString());
-        }
-        System.out.println("liste de noms origineaux: " + listeDeNomsOriginale);
+
 }
 
     }

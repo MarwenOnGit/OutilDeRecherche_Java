@@ -15,7 +15,6 @@ public class NettoyeurDeListe implements Pretraiteur{
                 cleanWords.add(motTraite);
             }
             nom.setMots(cleanWords);
-            System.out.println("Nom apres traitement Netoyeur de liste: " + nom );
         }
     }
 }

@@ -25,7 +25,6 @@ public class MoteurDeRecherche {
             pretraiteur.pretraiter(listeDeNoms);
         }
 
-        System.out.println("liste pretraitée finale: " + listeDeNoms );
         for (Couple couple : generateur.generer ( cibleList, listeDeNoms ) ){
             CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparerNom(couple.nom1(),couple.nom2()));
             listCouplesScores.add(coupleAvecScore);
