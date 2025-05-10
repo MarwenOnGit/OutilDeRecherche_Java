@@ -5,13 +5,14 @@ public class ComparateurDeNomSoph implements ComparateurDeNom {
    private ComparateurDeChaine comparateurDeChaine;
 
 public double comparerNom ( Nom nom1 , Nom nom2){
-    double score = 0.9 ;
+    double score = 0.0 ;
     for( int i=0 ; i<Math.min ( nom1.getNomEnString().length(), nom2.getNomEnString().length() ); i++ ) {
         if ( nom1.getNomEnString().charAt(i) == nom2.getNomEnString().charAt(i) ) {
-            score += (double) 1/Math.min( nom1.getNomEnString().length(), nom2.getNomEnString().length());
+//            score += (double) 1/Math.min( nom1.getNomEnString().length(), nom2.getNomEnString().length());
+            score += 1;
         }
     }
-   return score ;
+   return (double) score/(Math.min(nom1.getNomOriginalString().length(), nom2.getNomOriginalString().length())) ;
     }
 }
 
