@@ -14,9 +14,11 @@ public class NettoyeurDeListe implements Pretraiteur{
                 String motTraite = mt.replaceAll("[^a-zA-Z]", "");
                 cleanWords.add(motTraite);
             }
-            Nom cleanNom = new Nom(cleanWords);
-            cleanNomsList.add(cleanNom);
+//            Nom cleanNom = new Nom(cleanWords);
+            nom.setMots(cleanWords);
+//            cleanNomsList.add(cleanNom);
+            System.out.println("Nom apres traitement Netoyeur de liste: " + nom );
         }
-        return cleanNomsList;
+        return listeDeNoms;
     }
 }

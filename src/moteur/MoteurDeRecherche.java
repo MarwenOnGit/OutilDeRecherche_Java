@@ -11,27 +11,40 @@ public class MoteurDeRecherche {
     private ComparateurDeNom comparateur ;
     private Generateur generateur ;
     private Selectionneur selectionneur ;
-    private List<Pretraiteur> pretraiteur ;
-    private Indexeur indexeur ;
+    public List<Pretraiteur> pretraiteurs ;
+    //    private Indexeur indexeur ;
     public MoteurDeRecherche(Generateur generateur, ComparateurDeNom comparateur , Selectionneur selectionneur  ) {
         this.generateur = generateur ;
         this.comparateur = comparateur;
         this.selectionneur = selectionneur ;
     }
-    public List< Nom > search (Nom cible, List<Nom> liste  ) {
+    public List< Nom > search (Nom cible, List<Nom> listeDeNoms  ) {
         List< CoupleAvecScore> listCouplesScores = new ArrayList<>();
-        GenerateurDeCandidatsParTaille generateurParTaille = (GenerateurDeCandidatsParTaille) generateur ;
         List< Nom> cibleList = new ArrayList<>();
         cibleList.add(cible);
-        for (Couple couple : generateurParTaille.generer ( liste, cibleList ) ){
+        List<Nom> listePretraitee = new ArrayList<>();
+        listePretraitee.addAll(listeDeNoms);
+//        System.out.println(listeDeNoms);
+        for(Pretraiteur pretraiteur : pretraiteurs){
+            listePretraitee = pretraiteur.pretraiter(listePretraitee);
+//            System.out.println(listePretraitee);
+        }
+        System.out.println("liste pretraitée finale: " + listePretraitee );
+        for (Couple couple : generateur.generer ( cibleList, listePretraitee ) ){
             CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparerNom(couple.nom1(),couple.nom2()));
-            listCouplesScores.add (coupleAvecScore);
-
+            listCouplesScores.add(coupleAvecScore);
+            System.out.println(coupleAvecScore);
+        }
+//        System.out.println(listCouplesScores);
+        List<Nom> nomsSelectionnes = (List<Nom>)selectionneur.selectionner(listCouplesScores);
+        List<Nom> resultat = new ArrayList<>();
+        for (Nom nomSelectionne : nomsSelectionnes){
+            System.out.println("nom original de " + nomSelectionne + " " + nomSelectionne.getNomOriginalString());
+            resultat.add(nomSelectionne);
         }
 
-            return (List<Nom>) selectionneur.selectionner(listCouplesScores);
+        return resultat;
 
     }
 
 }
-

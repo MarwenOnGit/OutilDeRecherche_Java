@@ -13,4 +13,7 @@ public class CoupleAvecScore implements Comparable<CoupleAvecScore>{
     public int compareTo(CoupleAvecScore autreCoupleAvecScore){
         return Double.compare(this.score, autreCoupleAvecScore.score);
     }
+    public String toString(){
+        return this.coupleDeNoms.nom1() + " " + this.coupleDeNoms.nom2() + " "+  this.score;
+    }
 }

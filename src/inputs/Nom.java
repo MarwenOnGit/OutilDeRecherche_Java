@@ -1,16 +1,27 @@
 package inputs;
 import java.util.*;
 public class Nom {
+    private final String nomOriginal;
     private List<String> mots;
     private  String id ;
-    public Nom() {
-        mots = new ArrayList<>();
-    }
-    public Nom (List<String> mots) {
-        this.mots = mots;
+//    public Nom() {
+//        mots = new ArrayList<>();
+//        nomOriginal = new ArrayList<String>();
+//
+//    }
+    public Nom (String nom) {
+        this.mots = new ArrayList<String>(Arrays.asList(nom.split(" ")));
+        this.nomOriginal = nom;
     }
     public List<String> getMots() {
         return mots;
+    }
+    public String getNomOriginalString(){
+        return String.join(" ",nomOriginal);
+    }
+
+    public void setMots(String nom) {
+        this.mots = new ArrayList<String>(Arrays.asList(nom.split(" ")));
     }
 
     public void setMots(List<String> mots) {
@@ -21,8 +32,8 @@ public class Nom {
         Nom nom = (Nom) o;
         return id.equals(nom.id);
     }
-    public String transformerEnString() {
-        return String.join("", mots);
+    public String getNomEnString() {
+        return String.join(" ", mots);
     }
     public String toString (){
         return String.join(" ", mots);
