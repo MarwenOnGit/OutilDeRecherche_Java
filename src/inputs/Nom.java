@@ -1,4 +1,5 @@
 package inputs;
+import java.lang.reflect.Array;
 import java.util.*;
 public class Nom {
     private final String nomOriginal;
@@ -9,8 +10,17 @@ public class Nom {
 //        nomOriginal = new ArrayList<String>();
 //
 //    }
+
+
     public Nom (String nom) {
+        this.id = "";
         this.mots = new ArrayList<String>(Arrays.asList(nom.split(" ")));
+        this.nomOriginal = nom;
+    }
+
+    public Nom (String id, String nom){
+        this.id = id;
+        this.mots = Arrays.asList(nom.split(" "));
         this.nomOriginal = nom;
     }
     public List<String> getMots() {
