@@ -1,7 +1,9 @@
 import config.preprocessor.NettoyeurDeListe;
 import config.preprocessor.Pretraiteur;
 import config.preprocessor.TransformateurMinuscules;
+import generateur.Generateur;
 import generateur.GenerateurDeCandidatsParTaille;
+import generateur.GenerateurDeCandidatsParTailleV2;
 import importer.DataImporter;
 import importer.LocalCSVDataImporter;
 import selectionneur.Selectionneur;
@@ -29,20 +31,21 @@ public class Main {
 
         DataImporter localCSVImporter = new LocalCSVDataImporter("src/data/peps_names_1k.csv");
         List<Nom> listeDeNoms = localCSVImporter.importData();
-        System.out.println("taille de la liste importée" + listeDeNoms.size());
+//        System.out.println("taille de la liste importée" + listeDeNoms.size());
         Selectionneur<List<Nom>> selectionneur = new SelectionneurSimple();
-        GenerateurDeCandidatsParTaille generateur = new GenerateurDeCandidatsParTaille();
+        Generateur generateur = new GenerateurDeCandidatsParTailleV2();
         MoteurDeRecherche moteur = new MoteurDeRecherche(generateur, comparateur, selectionneur);
         List<Pretraiteur> pretraiteurs = new ArrayList<Pretraiteur>();
         pretraiteurs.add(new NettoyeurDeListe());
         pretraiteurs.add(new TransformateurMinuscules());
         moteur.pretraiteurs = pretraiteurs;
-        Nom nomToSearch = new Nom("Flavien Nziengui NZOUNDO");
+        Nom nomToSearch = new Nom("Flavien Nziengui NZOUNDOU");
         List<Nom> resultat = moteur.search(nomToSearch, listeDeNoms);
         List<String> resultatEnString  = new ArrayList<String>();
         for (Nom nom : resultat){
             resultatEnString.add(nom.getNomOriginalString());
         }
+        System.out.println("nombre de resultats: "+ resultatEnString.size());
         System.out.println(resultatEnString);
 
 }

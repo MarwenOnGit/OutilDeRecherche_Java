@@ -32,12 +32,11 @@ public class MoteurDeRecherche {
         for (Couple couple : generateur.generer ( cibleList, listeDeNoms ) ){
             CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparer(String.join("",couple.nom1().getMots()),String.join("",couple.nom2().getMots())));
             listCouplesScores.add(coupleAvecScore);
-            System.out.println(coupleAvecScore);
+           // System.out.println(coupleAvecScore);
         }
         List<Nom> nomsSelectionnes = (List<Nom>)selectionneur.selectionner(listCouplesScores);
         List<Nom> resultat = new ArrayList<>();
         for (Nom nomSelectionne : nomsSelectionnes){
-            System.out.println("nom original de " + nomSelectionne + " " + nomSelectionne.getNomOriginalString());
             resultat.add(nomSelectionne);
         }
 
