@@ -33,14 +33,14 @@ public class Main {
         DataImporter localCSVImporter = new LocalCSVDataImporter("src/data/peps_names_658k.csv");
         List<Nom> listeDeNoms = localCSVImporter.importData();
 //        System.out.println("taille de la liste importée" + listeDeNoms.size());
-        Selectionneur<List<Nom>> selectionneur = new SelectionneurSimple();
-        Generateur generateur = new GenerateurDeCandidatsSimple();
+        Selectionneur<List<Nom>> selectionneur = new SelectionneurDeNPremiers(3);
+        Generateur generateur = new GenerateurDeCandidatsParTailleV2();
         MoteurDeRecherche moteur = new MoteurDeRecherche(generateur, comparateur, selectionneur);
         List<Pretraiteur> pretraiteurs = new ArrayList<Pretraiteur>();
         pretraiteurs.add(new NettoyeurDeListe());
         pretraiteurs.add(new TransformateurMinuscules());
         moteur.pretraiteurs = pretraiteurs;
-        Nom nomToSearch = new Nom("mohamed abdelkader");
+        Nom nomToSearch = new Nom("mohamed");
 //        System.out.println("nom recherché length: " + String.join("", nomToSearch.getMots()).length());
         List<Nom> resultat = moteur.search(nomToSearch, listeDeNoms);
         List<String> resultatEnString  = new ArrayList<String>();
@@ -50,6 +50,6 @@ public class Main {
         System.out.println("nombre de resultats: "+ resultatEnString.size());
         System.out.println(resultatEnString);
 
-}
-
     }
+
+}

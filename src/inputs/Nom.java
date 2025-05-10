@@ -35,12 +35,11 @@ public class Nom {
     }
 
     public void setMots(List<String> mots) {
-//        List<String> nomsToAdd = new ArrayList<>();
-//        for (String mot :mots){
-//            nomsToAdd.add(mot.trim());
-//        }
-//        this.mots = nomsToAdd;
-        this.mots = mots;
+        List<String> nomsToAdd = new ArrayList<>();
+        for (String mot :mots){
+            nomsToAdd.add(mot.trim());
+        }
+        this.mots = nomsToAdd;
     }
 
     public boolean equals(Object o) {
