@@ -14,9 +14,9 @@ public class GenerateurDeCandidatsParTailleV2 implements Generateur {
     public List<Couple> generer (List<Nom> liste1 , List<Nom> liste2) {
         List<Couple> listeFinale = new ArrayList<>();
 //        Map<Integer, List<Nom>> resultatIndexage = new HashMap<Integer,List<Nom>>();
-        Map<Integer, List<Nom>> resultatIndexage = (Map<Integer, List<Nom>>) indexeur.indexer(liste2);
+        Map<Integer,List<Nom>> resultatIndexage=(Map<Integer, List<Nom>>)indexeur.indexer(liste2);
         for (Nom nom : liste1) {
-            for (int cle = (int) (nom.getNomEnString().length() * 0.8); cle <= (int) (nom.getNomEnString().length() * 1.2); cle++) {
+            for (int cle=(int)(String.join("",nom.getMots()).length() * 0.8); cle <= (int) (String.join("",nom.getMots()).length() * 1.2); cle++) {
                 for (Nom candidat : resultatIndexage.get(cle)) {
                     listeFinale.add(new Couple(nom, candidat));
                 }
