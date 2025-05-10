@@ -19,9 +19,9 @@ public class MoteurDeRecherche {
         this.comparateurUtilise = comparateur;
         this.selectionneur = selectionneur ;
     }
-    public List< Nom > search (Nom cible, List<Nom> listeDeNoms  ) {
-        List< CoupleAvecScore > listCouplesScores = new ArrayList<>();
-        List< Nom> cibleList = new ArrayList<>();
+    public List< Nom > search (Nom cible, List<Nom> listeDeNoms) {
+        List<CoupleAvecScore> listCouplesScores = new ArrayList<>();
+        List<Nom> cibleList = new ArrayList<>();
         cibleList.add(cible);
 //        ComparateurLevenshtein comparateur =(ComparateurLevenshtein) comparateurUtilise ;
         ComparateurDeNom comparateur =comparateurUtilise;
@@ -32,7 +32,7 @@ public class MoteurDeRecherche {
 
         for (Couple couple : generateur.generer ( cibleList, listeDeNoms ) ){
             CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparerNom(couple.nom1(),couple.nom2()));
-            System.out.println(coupleAvecScore);
+//            System.out.println(coupleAvecScore);
             listCouplesScores.add(coupleAvecScore);
            // System.out.println(coupleAvecScore);
         }

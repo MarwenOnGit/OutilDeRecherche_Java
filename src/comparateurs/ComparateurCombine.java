@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Arrays;
 public class ComparateurCombine implements ComparateurDeNom{
     public double comparerNom ( Nom nom1 , Nom nom2 ){
+        if(nom2.getMots().size() == 0 || nom1.getMots().size() == 0){
+            return 0.0;
+        }
         ComparateurLevenshtein comparateurLev = new ComparateurLevenshtein();
         List<Double> listeFinaleDeScore = new ArrayList<>();
         for ( String n1 : nom1.getMots()){
@@ -15,6 +18,7 @@ public class ComparateurCombine implements ComparateurDeNom{
             for ( String n2 : nom2.getMots() ){
                 listeDeScores.add (comparateurLev.comparer(n1,n2));
             }
+//            System.out.println(listeDeScores);
             listeFinaleDeScore.add (Collections.max(listeDeScores));
         }
         double valFinale = 0.0 ;
