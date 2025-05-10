@@ -22,7 +22,6 @@ public class LocalCSVDataImporter implements DataImporter{
                         .filter(values -> values.length >= 2)
                         //values[0] nom
                         //values[1] id
-                        //testinggg
                         .map(values -> new Nom(values[0].trim(), values[1].trim()))
                         .toList();
             } catch (IOException e) {

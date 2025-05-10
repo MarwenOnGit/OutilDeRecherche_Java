@@ -25,4 +25,3 @@ public class GenerateurDeCandidatsParTailleV2 implements Generateur {
         return listeFinale;
     }
 }
-//

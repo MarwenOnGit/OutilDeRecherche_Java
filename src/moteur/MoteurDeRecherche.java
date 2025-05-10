@@ -1,5 +1,7 @@
 package moteur;
+import comparateurs.ComparateurLevenshtein;
 
+import comparateurs.ComparateurDeChaine;
 import generateur.*;
 import comparateurs.ComparateurDeNom;
 import selectionneur.*;
@@ -8,25 +10,27 @@ import config.preprocessor.Pretraiteur;
 import inputs.*;
 import java.util.*;
 public class MoteurDeRecherche {
-    private ComparateurDeNom comparateur ;
+    private ComparateurDeChaine comparateurUtilise ;
     private Generateur generateur ;
     private Selectionneur selectionneur ;
     public List<Pretraiteur> pretraiteurs ;
-    public MoteurDeRecherche(Generateur generateur, ComparateurDeNom comparateur , Selectionneur selectionneur  ) {
+    public MoteurDeRecherche(Generateur generateur, ComparateurDeChaine comparateur , Selectionneur selectionneur  ) {
         this.generateur = generateur ;
-        this.comparateur = comparateur;
+        this.comparateurUtilise = comparateur;
         this.selectionneur = selectionneur ;
     }
     public List< Nom > search (Nom cible, List<Nom> listeDeNoms  ) {
-        List< CoupleAvecScore> listCouplesScores = new ArrayList<>();
+        List< CoupleAvecScore > listCouplesScores = new ArrayList<>();
         List< Nom> cibleList = new ArrayList<>();
         cibleList.add(cible);
+        ComparateurLevenshtein comparateur =(ComparateurLevenshtein) comparateurUtilise ;
         for(Pretraiteur pretraiteur : pretraiteurs){
             pretraiteur.pretraiter(listeDeNoms);
+            pretraiteur.pretraiter(cibleList);
         }
 
         for (Couple couple : generateur.generer ( cibleList, listeDeNoms ) ){
-            CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparerNom(couple.nom1(),couple.nom2()));
+            CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparer(String.join("",couple.nom1().getMots()),String.join("",couple.nom2().getMots())));
             listCouplesScores.add(coupleAvecScore);
             System.out.println(coupleAvecScore);
         }
