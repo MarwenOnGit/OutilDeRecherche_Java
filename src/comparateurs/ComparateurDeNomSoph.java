@@ -6,17 +6,21 @@ public class ComparateurDeNomSoph implements ComparateurDeNom {
 
 public double comparerNom ( Nom nom1 , Nom nom2){
     double score = 0.0 ;
-    for( int i=0 ; i<Math.min ( nom1.getNomEnString().length(), nom2.getNomEnString().length() ); i++ ) {
-        if ( nom1.getNomEnString().charAt(i) == nom2.getNomEnString().charAt(i) ) {
-//            score += (double) 1/Math.min( nom1.getNomEnString().length(), nom2.getNomEnString().length());
+    String nom1String = nom1.getNomEnString();
+    String nom2String = nom2.getNomEnString();
+    int len1 = nom1String.length();
+    int len2 = nom2String.length();
+    int minLen = Math.min ( len1 , len2 );
+    for( int i=0 ; i<minLen; i++ ) {
+        if (nom1String.charAt(i) == nom2String.charAt(i) ) {
             score += 1;
         }
     }
-    score = score/(Math.min(nom1.getNomOriginalString().length(), nom2.getNomOriginalString().length()));
-//    if(nom2.getMots().contains("flavien")){
-//        System.out.println("nom: " +nom2.getNomEnString() +" score: "+ score);
-//    }
-   return score ;
+    int originalMinLen = Math.min(
+            nom1.getNomOriginalString().length(),
+            nom2.getNomOriginalString().length()
+    );
+    return originalMinLen == 0 ? 0.0 : score / originalMinLen;
     }
 }
 

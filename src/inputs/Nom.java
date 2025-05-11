@@ -22,6 +22,7 @@ public class Nom {
         this.id = id;
         this.mots = Arrays.asList(nom.split(" "));
         this.nomOriginal = nom;
+
     }
     public List<String> getMots() {
         return mots;
@@ -32,6 +33,7 @@ public class Nom {
 
     public void setMots(String nom) {
         this.mots = new ArrayList<String>(Arrays.asList(nom.split(" ")));
+
     }
 
     public void setMots(List<String> mots) {
@@ -54,4 +56,5 @@ public class Nom {
     }
 
     public void addMot(String mot) {mots.add(mot);}
+
 }

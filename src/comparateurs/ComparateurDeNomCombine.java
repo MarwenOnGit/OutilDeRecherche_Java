@@ -5,8 +5,8 @@ import inputs.Nom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Arrays;
-public class ComparateurCombine implements ComparateurDeNom{
+
+public class ComparateurDeNomCombine implements ComparateurDeNom{
     public double comparerNom ( Nom nom1 , Nom nom2 ){
         if(nom2.getMots().size() == 0 || nom1.getMots().size() == 0){
             return 0.0;
