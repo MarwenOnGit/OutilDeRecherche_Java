@@ -12,7 +12,6 @@ public class Mapper implements Indexeur<Map<Integer,List<Nom>>>{
         return dictionnaire;
 
     }
-
 }
 
 
