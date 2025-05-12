@@ -1,4 +1,5 @@
 package moteur;
+import comparateurs.ComparateurCombine;
 import comparateurs.ComparateurLevenshtein;
 
 import comparateurs.ComparateurDeChaine;
@@ -10,14 +11,17 @@ import config.preprocessor.Pretraiteur;
 import inputs.*;
 import java.util.*;
 public class MoteurDeRecherche {
-    private ComparateurDeNom comparateurUtilise ;
+    private ComparateurCombine comparateurUtilise ;
     private Generateur generateur ;
     private Selectionneur selectionneur ;
     public List<Pretraiteur> pretraiteurs ;
-    public MoteurDeRecherche(Generateur generateur, ComparateurDeNom comparateur , Selectionneur selectionneur  ) {
+    public MoteurDeRecherche(Generateur generateur, ComparateurCombine comparateur , Selectionneur selectionneur  ) {
         this.generateur = generateur ;
         this.comparateurUtilise = comparateur;
         this.selectionneur = selectionneur ;
+    }
+    public MoteurDeRecherche() {
+
     }
     public List< Nom > search (Nom cible, List<Nom> listeDeNoms) {
         List<CoupleAvecScore> listCouplesScores = new ArrayList<>();
@@ -44,4 +48,19 @@ public class MoteurDeRecherche {
         return resultat;
     }
 
+    public void setComparateurUtilise(ComparateurCombine comparateurUtilise) {
+        this.comparateurUtilise = comparateurUtilise;
+    }
+
+    public void setGenerateur(Generateur generateur) {
+        this.generateur = generateur;
+    }
+    public void setSelectionneur(Selectionneur selectionneur) {
+        this.selectionneur = selectionneur;
+
+    }
+
+    public void setPretraiteurs(List<Pretraiteur> pretraiteurs) {
+            this.pretraiteurs = pretraiteurs;
+    }
 }

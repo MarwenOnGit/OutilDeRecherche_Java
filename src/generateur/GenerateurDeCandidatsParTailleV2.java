@@ -29,4 +29,5 @@ public class GenerateurDeCandidatsParTailleV2 implements Generateur {
 //        System.out.println("liste generée : " + listeFinale);
         return listeFinale;
     }
+
 }
