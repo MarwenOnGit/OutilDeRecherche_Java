@@ -7,7 +7,7 @@ public class GenerateurDeCandidatsParTaille implements Generateur {
         List<Couple> listeDeTousLesCouples = new ArrayList<>();
         for (Nom nom1 : liste1) {
             for ( Nom nom2 : liste2) {
-                if ( nom1.toString().equals(nom2.toString()) ) {
+                if ( nom1.toString().length()==nom2.toString().length() ) {
                     listeDeTousLesCouples.add(new Couple(nom1, nom2));
                 }
             }

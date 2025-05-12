@@ -56,9 +56,11 @@ public class Menu {
 
         private static List<Pretraiteur> choisirPretraiteurs() {
             List<Pretraiteur> pretraiteurs = new ArrayList<>();
+            System.out.println("-------------Choix de pretraiteurs-------------");
             System.out.println("1. Minuscules");
             System.out.println("2. Nettoyeur caractères spéciaux");
             System.out.println("3. Les deux");
+            System.out.println("4. Sans pretraiteurs");
 
             switch (getIntInput("Choix de prétraitement: ")) {
                 case 1 -> pretraiteurs.add(new TransformateurMinuscules());
@@ -67,15 +69,18 @@ public class Menu {
                     pretraiteurs.add(new TransformateurMinuscules());
                     pretraiteurs.add(new NettoyeurDeListe());
                 }
+                case 4 -> System.out.println("hope this is the problem"); // doesn't do anything
+
                 default -> System.out.println("Choix invalide, aucun prétraitement ajouté.");
             }
+            System.out.println(pretraiteurs);
             return pretraiteurs;
         }
 
         private static ComparateurDeChaine choisirComparateur() {
+            System.out.println("--------------Choix de comparateur-------------");
             System.out.println("1. Levenshtein");
             System.out.println("2. Jaro-Winkler");
-
             return switch (getIntInput("Choix de comparateur: ")) {
                 case 1 -> new ComparateurLevenshtein();
                 case 2 -> new ComparateurJaroWinkler();
@@ -87,9 +92,9 @@ public class Menu {
         }
 
         private static Selectionneur choisirSelectionneur() {
+            System.out.println("--------------Choix de selectionneur------------");
             System.out.println("1. Par seuil");
             System.out.println("2. Top N");
-            System.out.println("3. Tous");
 
             return switch (getIntInput("Choix de sélectionneur: ")) {
                 case 1 -> {
@@ -100,7 +105,6 @@ public class Menu {
                     int n = getIntInput("N: ");
                     yield new SelectionneurDeNPremiers(n);
                 }
-                case 3 -> new SelectionneurSimple();
                 default -> {
                     System.out.println("Choix invalide. Sélectionneur simple utilisé.");
                     yield new SelectionneurSimple();
@@ -109,6 +113,7 @@ public class Menu {
         }
 
         private static Generateur choisirGenerateur() {
+            System.out.println("------------Choix de generateur------------1");
             System.out.println("1. Générateur par taille");
             System.out.println("2. Générateur par taille V2");
 
@@ -124,6 +129,7 @@ public class Menu {
 
         private static void effectuerRecherche(MoteurDeRecherche moteur) {
             String nom = getStringInput("Nom à rechercher: ");
+            Nom nomARechercher = new Nom(nom);
             File fichier = demanderFichier("Fichier CSV: ");
             if (fichier == null) return;
 
@@ -131,9 +137,11 @@ public class Menu {
             List<Nom> liste = importer.importData();
 
             long start = System.nanoTime();
-            System.out.println(moteur.search(new Nom(nom), liste));
+            System.out.println(moteur.search(nomARechercher, liste));
             long end = System.nanoTime();
-
+            for ( Nom n : moteur.search(nomARechercher, liste)) {
+                System.out.println(n.getNomOriginalString());
+            }
             System.out.println("Durée: " + (end - start) / 1_000_000 + " ms");
         }
 

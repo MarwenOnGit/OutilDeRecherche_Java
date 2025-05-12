@@ -11,7 +11,7 @@ import config.preprocessor.Pretraiteur;
 import inputs.*;
 import java.util.*;
 public class MoteurDeRecherche {
-    private ComparateurCombine comparateurUtilise ;
+    private ComparateurDeNom comparateurUtilise ;
     private Generateur generateur ;
     private Selectionneur selectionneur ;
     public List<Pretraiteur> pretraiteurs ;
@@ -28,7 +28,7 @@ public class MoteurDeRecherche {
         List<Nom> cibleList = new ArrayList<>();
         cibleList.add(cible);
 //        ComparateurLevenshtein comparateur =(ComparateurLevenshtein) comparateurUtilise ;
-        ComparateurDeNom comparateur =comparateurUtilise;
+        ComparateurDeNom comparateur = comparateurUtilise;
         for(Pretraiteur pretraiteur : pretraiteurs){
             pretraiteur.pretraiter(listeDeNoms);
             pretraiteur.pretraiter(cibleList);
