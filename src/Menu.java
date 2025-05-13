@@ -69,7 +69,7 @@ public class Menu {
                     pretraiteurs.add(new TransformateurMinuscules());
                     pretraiteurs.add(new NettoyeurDeListe());
                 }
-                case 4 -> System.out.println("hope this is the problem"); // doesn't do anything
+                case 4 -> System.out.println(" "); // doesn't do anything
 
                 default -> System.out.println("Choix invalide, aucun prétraitement ajouté.");
             }
@@ -77,25 +77,34 @@ public class Menu {
             return pretraiteurs;
         }
 
-        private static ComparateurDeChaine choisirComparateur() {
-            System.out.println("--------------Choix de comparateur-------------");
-            System.out.println("1. Levenshtein");
-            System.out.println("2. Jaro-Winkler");
-            return switch (getIntInput("Choix de comparateur: ")) {
-                case 1 -> {
-                    yield  new ComparateurLevenshtein();
-                }
-                case 2 ->{
-                    yield new ComparateurJaroWinkler();
-                }
-                default -> {
-                    System.out.println("Choix invalide. Comparateur par défaut utilisé.");
-                    yield new ComparateurLevenshtein();
-                }
-            };
+    private static ComparateurDeChaine choisirComparateur() {
+        System.out.println("--------------Choix de comparateur-------------");
+        System.out.println("1. Levenshtein");
+        System.out.println("2. Jaro-Winkler");
+
+        int choix = getIntInput("Choix de comparateur: ");
+        ComparateurDeChaine comparateur;
+
+        switch (choix) {
+            case 1:
+                System.out.println(">> Comparateur choisi : Levenshtein");
+                comparateur = new ComparateurLevenshtein();
+                break;
+            case 2:
+                System.out.println(">> Comparateur choisi : Jaro-Winkler");
+                comparateur = new ComparateurJaroWinkler();
+                break;
+            default:
+                System.out.println("Choix invalide. Comparateur par défaut utilisé.");
+                comparateur = new ComparateurLevenshtein();
+                break;
         }
 
-        private static Selectionneur choisirSelectionneur() {
+        return comparateur;
+    }
+
+
+    private static Selectionneur choisirSelectionneur() {
             System.out.println("--------------Choix de selectionneur------------");
             System.out.println("1. Par seuil");
             System.out.println("2. Top N");
@@ -171,7 +180,8 @@ public class Menu {
             List<Nom> listeDeNoms = new LocalCSVDataImporter(f1.getPath()).importData();
 
             long start = System.nanoTime();
-            moteur.dedupliquerListe(listeDeNoms).forEach(System.out::println);
+            Deduplicateur dedup = new Deduplicateur(moteur);
+            dedup.dedupliquer(listeDeNoms);
             long end = System.nanoTime();
 
             System.out.println("Durée: " + (end - start) / 1_000_000 + " ms");

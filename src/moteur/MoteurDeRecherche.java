@@ -1,19 +1,13 @@
 package moteur;
 import comparateurs.ComparateurCombine;
-import comparateurs.ComparateurLevenshtein;
 
-import comparateurs.ComparateurDeChaine;
-import config.indexeur.Mapper;
 import generateur.*;
-import comparateurs.ComparateurDeNom;
 import selectionneur.*;
-import config.indexeur.Indexeur;
 import config.preprocessor.Pretraiteur;
 import inputs.*;
 import java.util.*;
 public class MoteurDeRecherche {
-    private ComparateurDeNom comparateurUtilise ;
-    private ComparateurDeNom comparateurDeChaine ;
+    private ComparateurCombine comparateurUtilise ;
     private Generateur generateur ;
     private Selectionneur selectionneur ;
     public List<Pretraiteur> pretraiteurs ;
@@ -22,14 +16,13 @@ public class MoteurDeRecherche {
         this.comparateurUtilise = comparateur;
         this.selectionneur = selectionneur ;
     }
-    public MoteurDeRecherche() {
+    public MoteurDeRecherche(List<Pretraiteur> pretraiteurs, ComparateurCombine comparateur) {
 
     }
     public List< Nom > search (Nom cible, List<Nom> listeDeNoms) {
         List<CoupleAvecScore> listCouplesScores = new ArrayList<>();
         List<Nom> cibleList = new ArrayList<>();
         cibleList.add(cible);
-//        ComparateurLevenshtein comparateur =(ComparateurLevenshtein) comparateurUtilise ;
         for(Pretraiteur pretraiteur : pretraiteurs){
             pretraiteur.pretraiter(listeDeNoms);
             pretraiteur.pretraiter(cibleList);
@@ -46,24 +39,27 @@ public class MoteurDeRecherche {
         }
         return resultat;
     }
-    public List<Couple> dedupliquerListe (List<Nom> listeDeNoms) {
-        Mapper map = new Mapper();
-        Map<Integer,List<Nom>> dictionnaire = new HashMap<>();
-        dictionnaire= map.indexer(listeDeNoms);
-        List<Couple> premierRes = new ArrayList<>();
-        for ( Nom nom : listeDeNoms ){
-            List<Nom> listeTest = new ArrayList<>();
-            listeTest.add (nom);
-            GenerateurDeCandidatsParTaille generateurUtilise = ( GenerateurDeCandidatsParTaille) generateur ;
-            premierRes =generateurUtilise.generer(listeTest, dictionnaire.get(nom.getNomEnString().length()));
-        }
-        List<CoupleAvecScore> listeDeCouplesScores = new ArrayList<>();
-        for ( Couple couple : premierRes){
-            listeDeCouplesScores.add( new CoupleAvecScore(couple,comparateurUtilise.comparerNom(couple.nom1(),couple.nom2())));
-        }
-        SelectionneurSimple selectionneurUtilise = ( SelectionneurSimple) selectionneur ;
-        return  selectionneurUtilise.selectionnerDedup(listeDeCouplesScores);
-    }
+//    public List<Couple> dedupliquerListe (List<Nom> listeDeNoms) {
+//        Mapper map = new Mapper();
+//        Map<Integer,List<Nom>> dictionnaire = new HashMap<>();
+//        dictionnaire= map.indexer(listeDeNoms);
+//        List<Couple> premierRes = new ArrayList<>();
+//        for ( Nom nom : listeDeNoms ){// creating a
+//            List<Nom> listeTest = new ArrayList<>();
+//            listeTest.add (nom);
+//            GenerateurDeCandidatsParTaille generateurUtilise = (GenerateurDeCandidatsParTaille) generateur ;
+//            premierRes =generateurUtilise.generer(listeTest, dictionnaire.get(nom.getNomEnString().length()));
+//        }
+//        for ( Pretraiteur pretraiteur : pretraiteurs ){
+//            pretraiteur.pretraiter(listeDeNoms);
+//        }
+//        List<CoupleAvecScore> listeDeCouplesScores = new ArrayList<>();
+//        for ( Couple couple : premierRes){
+//            listeDeCouplesScores.add( new CoupleAvecScore(couple,comparateurUtilise.comparerNom(couple.nom1(),couple.nom2())));
+//        }
+//        SelectionneurSimple selectionneurUtilise = ( SelectionneurSimple) selectionneur ;
+//        return  selectionneurUtilise.selectionnerDedup(listeDeCouplesScores);
+//    }
     //    public List<Nom> comparer( List<Nom> liste1 , List<Nom> liste2){
     //        Mapper outilDIndexage = new Mapper();
 //        Map<Integer, List<Nom>> map1 =outilDIndexage.indexer(liste1);

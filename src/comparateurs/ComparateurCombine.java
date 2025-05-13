@@ -15,11 +15,10 @@ public class ComparateurCombine implements ComparateurDeNom{
         List<Double> listeFinaleDeScore = new ArrayList<>();
         for ( String n1 : nom1.getMots()){
         List<Double> listeDeScores = new ArrayList<Double>();
-            for ( String n2 : nom2.getMots() ){
+            for ( String n2 : nom2.getMots()){
                 listeDeScores.add (comparateurDeChaine.comparer(n1,n2));
             }
-//            System.out.println(listeDeScores);
-            listeFinaleDeScore.add (Collections.max(listeDeScores));
+            listeFinaleDeScore.add(Collections.max(listeDeScores));
         }
         double valFinale = 0.0 ;
         for ( double d : listeFinaleDeScore ){

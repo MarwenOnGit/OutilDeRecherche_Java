@@ -54,4 +54,5 @@ public class Nom {
     }
 
     public void addMot(String mot) {mots.add(mot);}
+    public String getId(){return id;}
 }

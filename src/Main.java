@@ -38,17 +38,17 @@ public class Main {
         Selectionneur<List<Nom>> selectionneur = new SelectionneurDeNPremiers(3);
         Generateur generateur = new GenerateurDeCandidatsParTailleV2();
         System.out.println (map.indexer(listeDeNoms));
-        MoteurDeRecherche moteur = new MoteurDeRecherche(generateur, new ComparateurCombine(new ComparateurLevenshtein()), selectionneur);
+//        MoteurDeRecherche moteur = new MoteurDeRecherche(generateur, new ComparateurCombine(new ComparateurLevenshtein()), selectionneur);
         List<Pretraiteur> pretraiteurs = new ArrayList<Pretraiteur>();
         pretraiteurs.add(new NettoyeurDeListe());
         pretraiteurs.add(new TransformateurMinuscules());
-        moteur.setPretraiteurs(pretraiteurs) ;
+//        moteur.setPretraiteurs(pretraiteurs) ;
         Nom nomToSearch = new Nom("mohamed");
-        List<Nom> resultat = moteur.search(nomToSearch, listeDeNoms);
+//        List<Nom> resultat = moteur.search(nomToSearch, listeDeNoms);
         List<String> resultatEnString  = new ArrayList<String>();
-        for (Nom nom : resultat){
-            resultatEnString.add(nom.getNomOriginalString());
-        }
+//        for (Nom nom : resultat){
+//            resultatEnString.add(nom.getNomOriginalString());
+//        }
         System.out.println("nombre de resultats: "+ resultatEnString.size());
         System.out.println(resultatEnString);
 
