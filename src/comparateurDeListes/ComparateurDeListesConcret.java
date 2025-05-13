@@ -29,9 +29,13 @@ public class ComparateurDeListesConcret implements ComparateurDeListes {
 
             if (nomsListe2 != null) {
                 for (Nom nom : nomsListe1) {
+                    if(!nom.getNomEnString().isEmpty()){
                     List<Nom> correspondances = this.moteur.search(nom, nomsListe2);
                     if (correspondances != null) {
                         resultatsCommuns.addAll(correspondances);
+                    }
+                    }else {
+                        resultatsCommuns.add(nom);
                     }
                 }
             }

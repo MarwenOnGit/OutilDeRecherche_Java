@@ -4,6 +4,7 @@ import config.preprocessor.PretraiteurDeCharSpecial;
 import config.preprocessor.Pretraiteur;
 import config.preprocessor.TransformateurMinuscules;
 import generateur.Generateur;
+import generateur.GenerateurDeCandidatsParPremiereLettre;
 import generateur.GenerateurDeCandidatsParTailleV2;
 import generateur.GenerateurDeCandidatsSimple;
 import importer.DataImporter;
@@ -34,8 +35,8 @@ public class Main {
         /////////// engine pieces
         Selectionneur<List<Nom>> selectionneur = new SelectionneurSimple();
 //        Generateur generateur = new GenerateurDeCandidatsParTailleV2();
-        Generateur generateur = new GenerateurDeCandidatsSimple();
-        ComparateurDeNom comparateur = new ComparateurDeNomSoph();
+        Generateur generateur = new GenerateurDeCandidatsParPremiereLettre();
+        ComparateurDeNom comparateur = new ComparateurDeNomSimple();
         /// /////////////////////
 
 
@@ -69,8 +70,8 @@ public class Main {
         ComparateurDeListes comparateurDeListes = new ComparateurDeListesConcret(moteur);
         List<Nom> nomsEnCommun = comparateurDeListes.comparerListes(listeNom1,listeNom2);
         System.out.println("liste de noms en commun:("+nomsEnCommun.size()+")");
-        System.out.println(nomsEnCommun.toString());
-     x  System.out.println(listeNom1.subList(0,10));
+//        System.out.println(nomsEnCommun.toString());
+//        System.out.println(listeNom1.subList(0,10));
 
         ////////////////////////////////////////////////
 

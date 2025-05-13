@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class PretraiteurDeCharSpecial implements Pretraiteur {
     private static final Pattern NON_LETTERS = Pattern.compile("[^a-zA-Z]");
-//    private static final Pattern DIACRITICS = Pattern.compile("\\p{M}");
+    private static final Pattern DIACRITICS = Pattern.compile("\\p{M}");
 
     public void pretraiter(List<Nom> listeDeNoms) {
         for (Nom nom : listeDeNoms) {
