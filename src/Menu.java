@@ -82,8 +82,12 @@ public class Menu {
             System.out.println("1. Levenshtein");
             System.out.println("2. Jaro-Winkler");
             return switch (getIntInput("Choix de comparateur: ")) {
-                case 1 -> new ComparateurLevenshtein();
-                case 2 -> new ComparateurJaroWinkler();
+                case 1 -> {
+                    yield  new ComparateurLevenshtein();
+                }
+                case 2 ->{
+                    yield new ComparateurJaroWinkler();
+                }
                 default -> {
                     System.out.println("Choix invalide. Comparateur par défaut utilisé.");
                     yield new ComparateurLevenshtein();
@@ -99,7 +103,7 @@ public class Menu {
             return switch (getIntInput("Choix de sélectionneur: ")) {
                 case 1 -> {
                     double seuil = getDoubleInput("Seuil: ");
-                    yield new SelectionneurSimple();
+                    yield new SelectionneurSimple(seuil);
                 }
                 case 2 -> {
                     int n = getIntInput("N: ");
@@ -107,7 +111,7 @@ public class Menu {
                 }
                 default -> {
                     System.out.println("Choix invalide. Sélectionneur simple utilisé.");
-                    yield new SelectionneurSimple();
+                    yield new SelectionneurSimple(0.7);
                 }
             };
         }
@@ -137,7 +141,7 @@ public class Menu {
             List<Nom> liste = importer.importData();
 
             long start = System.nanoTime();
-            System.out.println(moteur.search(nomARechercher, liste));
+            moteur.search(nomARechercher, liste);
             long end = System.nanoTime();
             for ( Nom n : moteur.search(nomARechercher, liste)) {
                 System.out.println(n.getNomOriginalString());
@@ -162,14 +166,12 @@ public class Menu {
 
         private static void dedupliquerListe(MoteurDeRecherche moteur) {
             File f1 = demanderFichier("Premier fichier CSV: ");
-            File f2 = demanderFichier("Deuxième fichier CSV: ");
-            if (f1 == null || f2 == null) return;
+            if (f1 == null) return;
 
-            List<Nom> l1 = new LocalCSVDataImporter(f1.getPath()).importData();
-            List<Nom> l2 = new LocalCSVDataImporter(f2.getPath()).importData();
+            List<Nom> listeDeNoms = new LocalCSVDataImporter(f1.getPath()).importData();
 
             long start = System.nanoTime();
-//            moteur.dedupliquer(l1, l2).forEach(System.out::println);
+            moteur.dedupliquerListe(listeDeNoms).forEach(System.out::println);
             long end = System.nanoTime();
 
             System.out.println("Durée: " + (end - start) / 1_000_000 + " ms");

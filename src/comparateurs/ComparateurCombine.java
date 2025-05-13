@@ -25,7 +25,7 @@ public class ComparateurCombine implements ComparateurDeNom{
         for ( double d : listeFinaleDeScore ){
             valFinale += d;
         }
-        return (double) valFinale/listeFinaleDeScore.size();
+            return (double) valFinale/listeFinaleDeScore.size();
 
     }
     public ComparateurCombine( ComparateurDeChaine comparateurDeChaine ){
