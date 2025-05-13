@@ -15,28 +15,34 @@ public class ComparateurDeListesConcret implements ComparateurDeListes {
     public List<Nom> comparerListes(List<Nom> liste1, List<Nom> liste2){
         this.moteur.executerPretraitement(liste1);
         this.moteur.executerPretraitement(liste2);
+
         Indexeur<Map<Integer, List<Nom>>> indexeur = new Mapper();
-        Map<Integer, List<Nom>>  liste1Indexee = indexeur.indexer(liste1);
+        Map<Integer, List<Nom>> liste1Indexee = indexeur.indexer(liste1);
         Map<Integer, List<Nom>> liste2Indexee = indexeur.indexer(liste2);
+        System.out.println(liste2Indexee);
+        System.out.println(liste1Indexee);
 
-        List<Nom> resultatsCommuns = new ArrayList<>();
+        Set<Nom> resultatsCommuns = new HashSet<>();
 
-        for (Integer taille : liste1Indexee.keySet()) {
-            if (liste2Indexee.containsKey(taille)) {
-                List<Nom> noms1 = liste1Indexee.get(taille);
-                List<Nom> noms2 = liste2Indexee.get(taille);
 
-                Set<Nom> setNoms2 = new HashSet<>(noms2);
+        for (Map.Entry<Integer, List<Nom>> entry : liste1Indexee.entrySet()) {
+            Integer key = entry.getKey();
+            List<Nom> nomsListe1 = entry.getValue();
+            List<Nom> nomsListe2 = liste2Indexee.get(key);
 
-                for (Nom nom1 : noms1) {
-                    if (setNoms2.contains(nom1)) {
-                        resultatsCommuns.add(nom1);
+            if (nomsListe2 != null) {
+                for (Nom nom : nomsListe1) {
+                    List<Nom> correspondances = this.moteur.search(nom, nomsListe2);
+                    if (correspondances != null) {
+                        resultatsCommuns.addAll(correspondances);
                     }
                 }
             }
         }
 
-        return resultatsCommuns;
+        return new ArrayList<>(resultatsCommuns);
+
     }
+
 
 }

@@ -46,7 +46,7 @@ public class Nom {
 
     public boolean equals(Object o) {
         Nom nom = (Nom) o;
-        return id.equals(nom.id);
+        return this.nomOriginal.equals(nom.nomOriginal);
     }
     public String getNomEnString() {
         return String.join(" ", mots);
