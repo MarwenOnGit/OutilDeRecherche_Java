@@ -11,7 +11,7 @@ public class ComparateurDeNomCombine implements ComparateurDeNom{
         if(nom2.getMots().size() == 0 || nom1.getMots().size() == 0){
             return 0.0;
         }
-        ComparateurDeChaine comparateurLev = new ComparateurJaroWinkler();
+        ComparateurDeChaine comparateurLev = new ComparateurLevenshtein();
         List<Double> listeFinaleDeScore = new ArrayList<>();
         for ( String n1 : nom1.getMots()){
         List<Double> listeDeScores = new ArrayList<Double>();
