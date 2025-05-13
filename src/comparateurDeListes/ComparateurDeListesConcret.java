@@ -19,13 +19,10 @@ public class ComparateurDeListesConcret implements ComparateurDeListes {
         Indexeur<Map<Integer, List<Nom>>> indexeur = new Mapper();
         Map<Integer, List<Nom>> liste1Indexee = indexeur.indexer(liste1);
         Map<Integer, List<Nom>> liste2Indexee = indexeur.indexer(liste2);
-        System.out.println(liste2Indexee);
-        System.out.println(liste1Indexee);
 
-        Set<Nom> resultatsCommuns = new HashSet<>();
+        Set<Nom> resultatsCommuns = Collections.synchronizedSet(new HashSet<>());
 
-
-        for (Map.Entry<Integer, List<Nom>> entry : liste1Indexee.entrySet()) {
+        liste1Indexee.entrySet().parallelStream().forEach(entry -> {
             Integer key = entry.getKey();
             List<Nom> nomsListe1 = entry.getValue();
             List<Nom> nomsListe2 = liste2Indexee.get(key);
@@ -38,10 +35,9 @@ public class ComparateurDeListesConcret implements ComparateurDeListes {
                     }
                 }
             }
-        }
+        });
 
         return new ArrayList<>(resultatsCommuns);
-
     }
 
 
