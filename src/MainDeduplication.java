@@ -52,16 +52,6 @@ public class MainDeduplication {
         System.out.println("taille de la liste : "+ resultats.size());
         System.out.println("temps d'execution : " + durationInSeconds + " seconds and " +durationInMillis + " ms");
 
-//        moteur.executerPretraitement(listeDeNoms);
-//        Nom nomToSearch = new Nom("mohamed");
-//        List<Nom> resultat = moteur.search(nomToSearch, listeDeNoms);
-//        List<String> resultatEnString  = new ArrayList<String>();
-//        for (Nom nom : resultat){
-//            resultatEnString.add(nom.getNomOriginalString());
-//        }
-//        System.out.println("Nom recherché : "  +nomToSearch.getNomEnString());
-//        System.out.println("nombre de resultats: "+ resultatEnString.size());
-//        System.out.println(resultatEnString);
 
     }
 

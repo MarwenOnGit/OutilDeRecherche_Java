@@ -26,42 +26,35 @@ public class  MainComparaison {
         Pretraiteur pretraiteur2 = new TransformateurMinuscules();
 
 
-        DataImporter localCSVImporter = new LocalCSVDataImporter("src/data/peps_names_32k.csv");
-        List<Nom> listeDeNoms = localCSVImporter.importData();
+        DataImporter localCSVImporter1 = new LocalCSVDataImporter("src/data/peps_names_1k.csv");
+        DataImporter localCSVImporter2 = new LocalCSVDataImporter("src/data/peps_names_1k.csv");
+        List<Nom> listeDeNoms1 = localCSVImporter1.importData();
+        List<Nom> listeDeNoms2 = localCSVImporter2.importData();
         Selectionneur<List<Nom>> selectionneur = new SelectionneurSimple(0.9);
-        Generateur generateur = new GenerateurCandidatsPhonetique();
+        Generateur generateur = new GenerateurDeCandidatsSimple();
 //        System.out.println (map.indexer(listeDeNoms));
-        MoteurDeRecherche moteur = new MoteurDeRecherche(generateur, new ComparateurCombine(new ComparateurLevenshtein()), selectionneur);
+        MoteurDeRecherche moteur = new MoteurDeRecherche(generateur, new ComparateurDeNomSoph(),selectionneur);
         List<Pretraiteur> pretraiteurs = new ArrayList<Pretraiteur>();
         pretraiteurs.add(new NettoyeurDeListe());
         pretraiteurs.add(new TransformateurMinuscules());
         moteur.setPretraiteurs(pretraiteurs) ;
 
         long startTime = System.nanoTime();  // Temps de départ
-        List<Nom> resultats = moteur.dedupliquerListe(listeDeNoms);
+        List<Nom> resultats = moteur.comparer(listeDeNoms1,listeDeNoms2);
         long endTime = System.nanoTime();    // Temps de fin
 
         long duration = endTime - startTime;
         long durationInMillis = duration / 1000000;
         long durationInSeconds = duration / 1000000000;
 
-        System.out.println("liste dédupliquée:");
+        System.out.println("liste commune:");
         for (Nom nom : resultats){
             System.out.println("id = "+ nom.getId() +", nom =" +nom.getNomOriginalString());
         }
         System.out.println("taille de la liste : "+ resultats.size());
         System.out.println("temps d'execution : " + durationInSeconds + " seconds and " +durationInMillis + " ms");
 
-//        moteur.executerPretraitement(listeDeNoms);
-//        Nom nomToSearch = new Nom("mohamed");
-//        List<Nom> resultat = moteur.search(nomToSearch, listeDeNoms);
-//        List<String> resultatEnString  = new ArrayList<String>();
-//        for (Nom nom : resultat){
-//            resultatEnString.add(nom.getNomOriginalString());
-//        }
-//        System.out.println("Nom recherché : "  +nomToSearch.getNomEnString());
-//        System.out.println("nombre de resultats: "+ resultatEnString.size());
-//        System.out.println(resultatEnString);
+
 
     }
 

@@ -20,7 +20,7 @@ public class MoteurDeRecherche {
     private Generateur generateur ;
     private Selectionneur selectionneur ;
     public List<Pretraiteur> pretraiteurs ;
-    public MoteurDeRecherche(Generateur generateur, ComparateurCombine comparateur , Selectionneur selectionneur  ) {
+    public MoteurDeRecherche(Generateur generateur, ComparateurDeNom comparateur , Selectionneur selectionneur  ) {
         this.generateur = generateur ;
         this.comparateurUtilise = comparateur;
         this.selectionneur = selectionneur ;
