@@ -81,16 +81,15 @@ public class Menu {
         System.out.println("1. Levenshtein");
         System.out.println("2. Jaro-Winkler");
 
+
         int choix = getIntInput("Choix de comparateur: ");
         ComparateurDeChaine comparateur;
 
         switch (choix) {
             case 1:
-                System.out.println(">> Comparateur choisi : Levenshtein");
                 comparateur = new ComparateurLevenshtein();
                 break;
             case 2:
-                System.out.println(">> Comparateur choisi : Jaro-Winkler");
                 comparateur = new ComparateurJaroWinkler();
                 break;
             default:
@@ -128,10 +127,12 @@ public class Menu {
             System.out.println("------------Choix de generateur------------1");
             System.out.println("1. Générateur par taille");
             System.out.println("2. Générateur par taille V2");
+            System.out.println ("3. Générateur simple");
 
             return switch (getIntInput("Choix de générateur: ")) {
                 case 1 -> new GenerateurDeCandidatsParTaille();
                 case 2 -> new GenerateurDeCandidatsParTailleV2();
+                case 3 -> new GenerateurDeCandidatsSimple();
                 default -> {
                     System.out.println("Choix invalide. Générateur simple utilisé.");
                     yield new GenerateurDeCandidatsParTailleV2();
