@@ -25,53 +25,91 @@ public class MoteurDeRecherche {
     public MoteurDeRecherche() {
 
     }
+    public void executerPretraitement(List<Nom> listeDeNoms){
+        for(Pretraiteur pretraiteur : pretraiteurs){
+            pretraiteur.pretraiter(listeDeNoms);
+        }
+    }
     public List< Nom > search (Nom cible, List<Nom> listeDeNoms) {
         List<CoupleAvecScore> listCouplesScores = new ArrayList<>();
         List<Nom> cibleList = new ArrayList<>();
         cibleList.add(cible);
 //        ComparateurLevenshtein comparateur =(ComparateurLevenshtein) comparateurUtilise ;
-        for(Pretraiteur pretraiteur : pretraiteurs){
-            pretraiteur.pretraiter(listeDeNoms);
+        ComparateurDeNom comparateur =comparateurUtilise;
+
+        for (Pretraiteur pretraiteur : pretraiteurs){
             pretraiteur.pretraiter(cibleList);
         }
-
         for (Couple couple : generateur.generer ( cibleList, listeDeNoms ) ){
-            CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateurUtilise.comparerNom(couple.nom1(),couple.nom2()));
+            CoupleAvecScore coupleAvecScore = new CoupleAvecScore(couple,comparateur.comparerNom(couple.nom1(),couple.nom2()));
             listCouplesScores.add(coupleAvecScore);
         }
         List<Nom> nomsSelectionnes = (List<Nom>)selectionneur.selectionner(listCouplesScores);
-        List<Nom> resultat = new ArrayList<>();
-        for (Nom nomSelectionne : nomsSelectionnes){
-            resultat.add(nomSelectionne);
-        }
-        return resultat;
+        return nomsSelectionnes;
     }
-    public List<Couple> dedupliquerListe (List<Nom> listeDeNoms) {
-        Mapper map = new Mapper();
-        Map<Integer,List<Nom>> dictionnaire = new HashMap<>();
-        dictionnaire= map.indexer(listeDeNoms);
-        List<Couple> premierRes = new ArrayList<>();
-        for ( Nom nom : listeDeNoms ){
-            List<Nom> listeTest = new ArrayList<>();
-            listeTest.add (nom);
-            GenerateurDeCandidatsParTaille generateurUtilise = ( GenerateurDeCandidatsParTaille) generateur ;
-            premierRes =generateurUtilise.generer(listeTest, dictionnaire.get(nom.getNomEnString().length()));
+
+    public List<Nom> dedupliquerListe (List<Nom> listeDeNoms) {
+        this.executerPretraitement(listeDeNoms);
+
+        Indexeur<Map<Integer, List<Nom>>> indexeur = new Mapper();
+        Map<Integer, List<Nom>> listeIndexee = indexeur.indexer(listeDeNoms);
+
+        Set<Nom> uniques = new HashSet<>();
+
+        for (Map.Entry<Integer, List<Nom>> entry : listeIndexee.entrySet()) {
+            List<Nom> nomsDansGroupe = entry.getValue();
+
+            for (Nom nom : nomsDansGroupe) {
+                if (!nom.getNomEnString().isEmpty()) {
+                    List<Nom> correspondances = this.search(nom, nomsDansGroupe);
+
+                    if (correspondances == null || correspondances.size() <= 1) {
+                            uniques.add(nom);
+                    }
+                } else {
+                    uniques.add(nom);
+                }
+            }
         }
-        List<CoupleAvecScore> listeDeCouplesScores = new ArrayList<>();
-        for ( Couple couple : premierRes){
-            listeDeCouplesScores.add( new CoupleAvecScore(couple,comparateurUtilise.comparerNom(couple.nom1(),couple.nom2())));
-        }
-        SelectionneurSimple selectionneurUtilise = ( SelectionneurSimple) selectionneur ;
-        return  selectionneurUtilise.selectionnerDedup(listeDeCouplesScores);
+
+        return new ArrayList<>(uniques);
     }
-    //    public List<Nom> comparer( List<Nom> liste1 , List<Nom> liste2){
-    //        Mapper outilDIndexage = new Mapper();
-//        Map<Integer, List<Nom>> map1 =outilDIndexage.indexer(liste1);
-//        Map<Integer, List<Nom>> map2 =outilDIndexage.indexer(liste2);
-//        f)
-//
-//    }
-    public void setComparateurUtilise(ComparateurCombine comparateurUtilise) {
+
+
+    //comparateur de listes
+        public List<Nom> comparer( List<Nom> liste1 , List<Nom> liste2){
+            this.executerPretraitement(liste1);
+            this.executerPretraitement(liste2);
+
+            Indexeur<Map<Integer, List<Nom>>> indexeur = new Mapper();
+            Map<Integer, List<Nom>> liste1Indexee = indexeur.indexer(liste1);
+            Map<Integer, List<Nom>> liste2Indexee = indexeur.indexer(liste2);
+
+            Set<Nom> resultatsCommuns = new HashSet<>();
+
+            for (Map.Entry<Integer, List<Nom>> entry : liste1Indexee.entrySet()) {
+                Integer key = entry.getKey();
+                List<Nom> nomsListe1 = entry.getValue();
+                List<Nom> nomsListe2 = liste2Indexee.get(key);
+
+                if (nomsListe2 != null) {
+                    for (Nom nom : nomsListe1) {
+                        if (!nom.getNomEnString().isEmpty()) {
+                            List<Nom> correspondances = this.search(nom, nomsListe2);
+                            if (correspondances != null) {
+                                resultatsCommuns.addAll(correspondances);
+                            }
+                        } else {
+                            resultatsCommuns.add(nom);
+                        }
+                    }
+                }
+            }
+
+            return new ArrayList<>(resultatsCommuns);
+
+    }
+    public void setComparateur(ComparateurCombine comparateurUtilise) {
         this.comparateurUtilise = comparateurUtilise;
     }
 
