@@ -24,7 +24,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scannerObj = new Scanner(System.in);
         Mapper map = new Mapper();
-        ComparateurDeNom comparateur = new ComparateurCombine(new ComparateurLevenshtein());
+        ComparateurDeNom comparateur = new ComparateurDeNomSoph();
 //        ComparateurLevenshtein compLev = new ComparateurLevenshtein();
         Pretraiteur pretraiteur1 = new NettoyeurDeListe() ;
         Pretraiteur pretraiteur2 = new TransformateurMinuscules();
@@ -33,24 +33,31 @@ public class Main {
        // Nom nom3 = new Nom("khaled smiri");
       //  Nom nom4 = new Nom("marouan@##@#@#@$$@$@ bouhmed");
 
-        DataImporter localCSVImporter = new LocalCSVDataImporter("src/data/peps_names_1k.csv");
+        DataImporter localCSVImporter = new LocalCSVDataImporter("src/data/peps_names_658k.csv");
         List<Nom> listeDeNoms = localCSVImporter.importData();
-        Selectionneur<List<Nom>> selectionneur = new SelectionneurDeNPremiers(3);
-        Generateur generateur = new GenerateurDeCandidatsParTailleV2();
+        Selectionneur<List<Nom>> selectionneur = new SelectionneurDeNPremiers(5);
+        Generateur generateur = new GenerateurDeCandidatsSimple();
         System.out.println (map.indexer(listeDeNoms));
 //        MoteurDeRecherche moteur = new MoteurDeRecherche(generateur, new ComparateurCombine(new ComparateurLevenshtein()), selectionneur);
         List<Pretraiteur> pretraiteurs = new ArrayList<Pretraiteur>();
         pretraiteurs.add(new NettoyeurDeListe());
         pretraiteurs.add(new TransformateurMinuscules());
 //        moteur.setPretraiteurs(pretraiteurs) ;
-        Nom nomToSearch = new Nom("mohamed");
-//        List<Nom> resultat = moteur.search(nomToSearch, listeDeNoms);
+        List<Pretraiteur> emptyList = new ArrayList<>();
+        MoteurDeRecherche moteurDeRecherche = new MoteurDeRecherche(generateur, comparateur, selectionneur);
+        moteurDeRecherche.setPretraiteurs(new ArrayList<Pretraiteur>());
+        Nom nomToSearch = new Nom("mohamed ahmed");
+        long start = System.nanoTime();
+         moteurDeRecherche.search(nomToSearch, listeDeNoms);
+        long end = System.nanoTime();
+//        System.out.println ( moteurDeRecherche.search(nomToSearch, listeDeNoms));
+        System.out.println("Durée: " + (end - start) / 1_000_000 + " ms");
         List<String> resultatEnString  = new ArrayList<String>();
 //        for (Nom nom : resultat){
 //            resultatEnString.add(nom.getNomOriginalString());
 //        }
-        System.out.println("nombre de resultats: "+ resultatEnString.size());
-        System.out.println(resultatEnString);
+//        System.out.println("nombre de resultats: "+ resultatEnString.size());
+//        System.out.println(resultatEnString);
 
     }
 

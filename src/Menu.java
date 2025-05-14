@@ -69,11 +69,10 @@ public class Menu {
                     pretraiteurs.add(new TransformateurMinuscules());
                     pretraiteurs.add(new NettoyeurDeListe());
                 }
-                case 4 -> System.out.println(" "); // doesn't do anything
+                case 4 -> pretraiteurs = pretraiteurs;
 
                 default -> System.out.println("Choix invalide, aucun prétraitement ajouté.");
             }
-            System.out.println(pretraiteurs);
             return pretraiteurs;
         }
 

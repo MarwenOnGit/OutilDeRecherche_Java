@@ -1,22 +1,24 @@
 package moteur;
 import comparateurs.ComparateurCombine;
 
+import comparateurs.ComparateurDeNom;
 import generateur.*;
 import selectionneur.*;
 import config.preprocessor.Pretraiteur;
 import inputs.*;
 import java.util.*;
 public class MoteurDeRecherche {
-    private ComparateurCombine comparateurUtilise ;
+    private ComparateurDeNom comparateurUtilise ;
     private Generateur generateur ;
     private Selectionneur selectionneur ;
     public List<Pretraiteur> pretraiteurs ;
-    public MoteurDeRecherche(Generateur generateur, ComparateurCombine comparateur , Selectionneur selectionneur  ) {
+    public MoteurDeRecherche(Generateur generateur, ComparateurDeNom comparateur , Selectionneur selectionneur ) {
         this.generateur = generateur ;
         this.comparateurUtilise = comparateur;
         this.selectionneur = selectionneur ;
+        this.pretraiteurs = pretraiteurs ;
     }
-    public MoteurDeRecherche(List<Pretraiteur> pretraiteurs, ComparateurCombine comparateur) {
+    public MoteurDeRecherche(List<Pretraiteur> pretraiteurs , ComparateurCombine comparateur) {
 
     }
     public List< Nom > search (Nom cible, List<Nom> listeDeNoms) {
