@@ -21,7 +21,7 @@ public class PretraiteurPhonetique implements Pretraiteur {
 
         char firstLetter = s.charAt(0);
 
-        // Soundex map
+
         String mapped = s.replaceAll("[BFPV]", "1")
                 .replaceAll("[CGJKQSXZ]", "2")
                 .replaceAll("[DT]", "3")
@@ -30,7 +30,7 @@ public class PretraiteurPhonetique implements Pretraiteur {
                 .replaceAll("R", "6")
                 .replaceAll("[AEIOUYHW]", "");
 
-        // Remove consecutive duplicates
+
         StringBuilder cleaned = new StringBuilder();
         char prev = ' ';
         for (char c : mapped.toCharArray()) {
@@ -40,7 +40,6 @@ public class PretraiteurPhonetique implements Pretraiteur {
             }
         }
 
-        // Assemble code: First letter + next 3 digits
         String code = firstLetter + cleaned.toString();
         code = code.replaceAll("[^A-Z0-9]", "");  // Sanitize
 

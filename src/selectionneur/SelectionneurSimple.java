@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectionneurSimple implements Selectionneur<List<Nom>> {
-
+    private static double seuil ;
     public  List<Nom> selectionner(List<CoupleAvecScore> couplesAvecScores) {
         List<Nom> nomsSelectionnes  = new ArrayList<>();
         for ( CoupleAvecScore couple : couplesAvecScores ){
@@ -17,6 +17,8 @@ public class SelectionneurSimple implements Selectionneur<List<Nom>> {
        }
         return nomsSelectionnes;
     }
-
+    public SelectionneurSimple(double seuil) {
+        SelectionneurSimple.seuil = seuil;
+    }
 }
 

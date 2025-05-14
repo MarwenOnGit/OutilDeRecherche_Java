@@ -33,7 +33,7 @@ public class Main {
 
 
         /////////// engine pieces
-        Selectionneur<List<Nom>> selectionneur = new SelectionneurSimple();
+        Selectionneur<List<Nom>> selectionneur = new SelectionneurSimple(0.7);
 //        Generateur generateur = new GenerateurDeCandidatsParTailleV2();
         Generateur generateur = new GenerateurDeCandidatsParPremiereLettre();
         ComparateurDeNom comparateur = new ComparateurDeNomSimple();

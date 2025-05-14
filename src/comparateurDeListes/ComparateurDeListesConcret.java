@@ -13,8 +13,8 @@ public class ComparateurDeListesConcret implements ComparateurDeListes {
         this.moteur = moteur;
     }
     public List<Nom> comparerListes(List<Nom> liste1, List<Nom> liste2){
-        this.moteur.executerPretraitement(liste1);
-        this.moteur.executerPretraitement(liste2);
+            this.moteur.executerPretraitement(liste1);
+            this.moteur.executerPretraitement(liste2);
 
         Indexeur<Map<Integer, List<Nom>>> indexeur = new Mapper();
         Map<Integer, List<Nom>> liste1Indexee = indexeur.indexer(liste1);
