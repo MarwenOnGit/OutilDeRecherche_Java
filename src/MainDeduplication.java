@@ -17,7 +17,7 @@ import moteur.*;
 import java.util.*;
 import java.util.Scanner ;
 import comparateurs.ComparateurLevenshtein;
-public class Main {
+public class MainDeduplication {
     public static void main(String[] args) {
         Scanner scannerObj = new Scanner(System.in);
         Mapper map = new Mapper();
