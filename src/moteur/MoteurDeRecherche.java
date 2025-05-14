@@ -3,7 +3,10 @@ import comparateurs.ComparateurCombine;
 import comparateurs.ComparateurLevenshtein;
 
 import comparateurs.ComparateurDeChaine;
+import config.indexeur.IndexeurPrefixe;
 import config.indexeur.Mapper;
+import config.preprocessor.PretraiteurPhonetiqueSimple;
+import config.preprocessor.TransformateurMinuscules;
 import generateur.*;
 import comparateurs.ComparateurDeNom;
 import selectionneur.*;
@@ -49,14 +52,14 @@ public class MoteurDeRecherche {
     }
 
     public List<Nom> dedupliquerListe (List<Nom> listeDeNoms) {
-        this.executerPretraitement(listeDeNoms);
+        new PretraiteurPhonetiqueSimple().pretraiter(listeDeNoms);
 
-        Indexeur<Map<Integer, List<Nom>>> indexeur = new Mapper();
-        Map<Integer, List<Nom>> listeIndexee = indexeur.indexer(listeDeNoms);
+        Indexeur<Map<String, List<Nom>>> indexeur = new IndexeurPrefixe();
+        Map<String, List<Nom>> listeIndexee = indexeur.indexer(listeDeNoms);
 
         Set<Nom> uniques = new HashSet<>();
 
-        for (Map.Entry<Integer, List<Nom>> entry : listeIndexee.entrySet()) {
+        for (Map.Entry<String, List<Nom>> entry : listeIndexee.entrySet()) {
             List<Nom> nomsDansGroupe = entry.getValue();
 
             for (Nom nom : nomsDansGroupe) {
